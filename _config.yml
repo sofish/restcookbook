@@ -1,0 +1,7 @@
+permalink: /:categories/:title/
+exclude: README.md
+highlighter: pygments
+
+title: Rest 手册
+
+baseurl: /restcookbook

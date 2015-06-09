@@ -1,0 +1,23 @@
+---
+layout: recipe
+title: 何时返回 4xx 或 5xx 代码
+category: HTTP Methods
+author: joshua thijssen
+author_email: jthijssen@noxlogic.nl
+---
+
+<p class="question">我们应该何时向客户端返回 4xx or 5xx 状态码？</p>
+
+<p>4xx 码通常用来告诉客户端这一端发生了一些错误。客户端不应该再重新发送请求，而是先解决错误。</p>
+
+<p>5xx 码告诉客户端其发送的请求是完美通过验证的但服务器端出现了一些问题。客户端可以无需做任务修改来继续向服务端发送请求。</p>
+
+<p>如果你的 API 尝试把一条记录存储到数据库，但因为数据库错误而失败，例如，它不可以访问，或者有约束规则错误，
+  使用 5xx 码（可能是 <a href="http://httpstatus.es/500">500</a> - Internal server error）。总是为出错提供响应。这个出错必须被客户端显示出来，或者如果它是一个自动化系统 ，则使
+  其自动重试相应的请求。</p>
+
+<p>如果你作为一个客户端收到一个 <a href="http://httpstatus.es/500">500</a> 状态码，你可以决定再尝试一次（在一个等待区间，按照设定的间隔或者次数）以确定服务器端能否处理后继的类似请求。
+  一些状态码诸如 <a href="http://httpstatus.es/503">503</a> 返回一个「稍后重试」的头。这可以用来决定客户端应该在多久之后重试。</p>
+
+
+

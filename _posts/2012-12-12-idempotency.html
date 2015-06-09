@@ -1,0 +1,72 @@
+---
+layout: recipe
+title: 哪些是幂等或/且安全的方法？
+category: HTTP Methods
+author: joshua thijssen
+author_email: jthijssen@noxlogic.nl
+---
+
+<p class="question">哪些叫幂等或/且安全的方法？</p>
+
+<p>安全方法是指不修改资源的 HTTP 方法。譬如，当使用 GET 或者 HEAD 作为资源 URL，都必须不去改变资源。然而，这并不全准确。意思是：它不改变资源的
+    表示形式。对于安全方法，它仍然可能改变服务器上的内容或资源，但这必须不导致不同的表现形式。
+</p>
+
+<p>这表示下述是不对的，因为它实际上将删除博客文章：</p>
+<pre>
+GET /blog/1234/delete HTTP/1.1
+</pre>
+
+<p>安全方法是那些可以被缓存、对资源无损预加载的方法。</p>
+
+<h3>幂等方法</h3>
+<p>HTTP 幂等方法是指无论调用多少次都不会有不同结果的 HTTP 方法。它无论是调用一次，还是十次都无关紧要。结果仍应相同。再次强调，
+  它只作用于结果而非资源本身。它仍可能被操纵（如一个更新的 timestamp），提供这一信息并不影响（当前）资源的表现形式。</p>
+
+<p>考虑一下下面的结果：</p>
+<pre>
+  a = 4;
+</pre>
+<pre>
+  a++;
+</pre>
+
+<p>第一个例子是幂等的：无论这个声明被执行多少次，a 总是等于 4。第二个例子并不是幂等的，执行 10 次将导致一个与执行 5 次所不一样的结果。由于两个例子
+  都改变 a 的值，因此两者都不是安全方法。</p>
+
+<p>幂等对于构建一个容易（fault-tolerent）的 API 非常重要。假设一个客户端希望通过 POST 来更新一个资源，由于 POST 是一个非幂等方法，调用它多次
+  将导致错误的更新。那么当你向服务发送一个 POST 请求过程中超时将会发生什么，是不是资源已经被更新？超时发生在向服务器发送请求阶段还是服务返回
+  客户端阶段？我们是否能够安全地重试一遍，或第一要查出资源究竟发生了什么变化？通过幂等方法，我们则无须回答这种问题，直到我们从服务器得到返回，
+  我们可以安全地重发请求。</p>
+
+<p>处理安全方法仍需谨慎：
+  if a seemingly safe method like [GET] will change a resource, it might
+    be possible that any middleware client proxy systems between you and the server, will cache this response. Another
+    client who wants to change this resource through the same URL (like: http://example.org/api/article/1234/delete), will
+    not call the server, but return the information directly from the cache. Non-safe (and non-idempotent) methods will
+    never be cached by any middleware proxies</p>
+
+
+
+<h3>(部分) HTTP 方法概览</h3>
+<table>
+    <tr><th>HTTP Method</th><th>Idempotent</th><th>Safe</th></tr>
+    <tr><td>OPTIONS    </td><td>yes       </td><td>yes</td></tr>
+    <tr><td>GET        </td><td>yes       </td><td>yes</td></tr>
+    <tr><td>HEAD       </td><td>yes       </td><td>yes</td></tr>
+    <tr><td>PUT        </td><td>yes       </td><td>no </td></tr>
+    <tr><td>POST       </td><td>no        </td><td>no </td></tr>
+    <tr><td>DELETE     </td><td>yes       </td><td>no </td></tr>
+    <tr><td>PATCH      </td><td>no        </td><td>no </td></tr>
+</table>
+
+
+<h3>另请参见</h3>
+<p>
+<ul>
+    <li><a href="http://tools.ietf.org/html/rfc7231#section-4.2">RFC 7231 - HTTP-1.1 Spec</a></li>
+    <li><a href="/HTTP Methods/put-vs-post/">When to use [PUT] or [POST]?</a></li>
+</ul>
+</p>
+
+

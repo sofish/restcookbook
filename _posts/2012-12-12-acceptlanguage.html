@@ -1,0 +1,17 @@
+---
+layout: recipe
+title: 不合规的 Accept-Language 头
+category: HTTP Headers
+author: joshua thijssen
+author_email: jthijssen@noxlogic.nl
+---
+
+<p class="question">如果一个 HTTP ACCEPT 头不合规，返回 <a href="http://httpstatus.es/406">406</a>。如果一个 Accept-Language 头不合规，响应什么状态码比较合适？ </p>
+
+<h3>答案</h3>
+<p>你应该返回 <a href="http://httpstatus.es/406">406</a>. RFC 2616 10.4.7 提到 "accept headers" 是复数。它建议所有 Accept-* 头不合规时，应该返回一个 <a href="http://httpstatus.es/406">406</a> 响应。</p>
+
+<h3>另请参见</h3>
+<ul>
+    <li><a href="http://tools.ietf.org/html/rfc7231#section-6.5.6">RFC 7231 - 406 Not Acceptable</a></li>
+</ul>
