@@ -1,18 +1,17 @@
 ---
 layout: recipe
-title: Asynchronous operations
+title: 异步操作
 category: Resources
 author: joshua thijssen
 author_email: jthijssen@noxlogic.nl
 ---
 
-<p class="question">How can I let users create resources that might take a considerable amount of time. I cannot have my users wait on the API to finish.</p>
+<p class="question">该如何处理用户的一个可能非常耗时的资源创建，我并不能让用户等待 API 完成。</p>
+<p>与其创建一个真正的资源，不如创建一个临时的。与其让 HTTP 返回 <a href="http://httpstatus.es/201">201</a>（已创建），
+不如返回 <a href="http://httpstatus.es/202">202</a> （被接受），它告诉客户端这个请求已经被服务器接受且理解，但资源
+仍未被生成。通过 Location 头来发送临时的资源。</p>
 
-<p>Instead of creating the actual resources, create a temporary one. Instead of returning a <a href="http://httpstatus.es/201">201</a> (Created) HTTP response, you can then issue at
-<a href="http://httpstatus.es/202">202</a> (Accepted) response code. This informs the client that the request has been accepted and understood by the server, but the resource is not (yet) created.
-Send the temporary resource inside the Location header.</p>
-
-<h3>Request:</h3>
+<h3>请求:</h3>
 <pre>
 POST /blogs HTTP/1.1
 <xml>
@@ -20,25 +19,23 @@ POST /blogs HTTP/1.1
 </xml>
 </pre>
 
-<h3>Response:</h3>
+<h3>返回:</h3>
 <pre>
 HTTP/1.1 202 Accepted
 Location: /queue/12345
 </pre>
 
-<p>This location can store information about the status of the actual resource: an ETA on when it will be created, what is currently being done or processed.</p>
-
-<p>When the actual resource has been created, the temporary resources can return a <a href="http://httpstatus.es/303">303</a> (see other) response. The location header returns the URI to the definitive
-resource. A client can either [DELETE] the temporary resource, or the server can expire this resource and return a <a href="http://httpstatus.es/410">410</a> GONE later on.</p>
-
+<p>这个地址可能用来存储关于真正资源的状态：一个关于几时会被创建，现在已经完成或者正在运行的 ETA（Estimated Time of Arrival，估计完成时间）。</p>
+<p>当真正的资源被创建，临时资源可能返回一个 <a href="http://httpstatus.es/303">303</a> (see other)。这个头地址重定向于真正的资源。
+客户端可以 [DELETE] 这个临时资源或者服务器会让这个资源失效并返回一个 <a href="http://httpstatus.es/410">410</a>。</p>
 
 <h3>另请参见</h3>
 <ul>
     <li><a href="http://www.adayinthelifeof.nl/2011/06/02/asynchronous-operations-in-rest/">A day in the life of - Asynchronous operations in REST</a></li>
 </ul>
 
-<h3>Caveats</h3>
+<h3>注意</h3>
 <ul>
-    <li>Don't use a <a href="http://httpstatus.es/301">301</a> or <a href="http://httpstatus.es/302">302</a> when a resource has been created. These codes tell the client that the SAME resource can be found at another location. A <a href="http://httpstatus.es/303">303</a> tells
-a client that ANOTHER resource can be found at ANOTHER location.</li>
+    <li>当一个资源已经被创建，不要使用 <a href="http://httpstatus.es/301">301</a> 或者 <a href="http://httpstatus.es/302">302</a>
+    这个 code 告诉客户端相当的资源可以在另一个 URL 找到，而 <a href="http://httpstatus.es/303">303</a> 告诉客户某个资源可以在某个地方找到。</li>
 </ul>

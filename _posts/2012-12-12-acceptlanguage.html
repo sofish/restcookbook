@@ -6,7 +6,7 @@ author: joshua thijssen
 author_email: jthijssen@noxlogic.nl
 ---
 
-<p class="question">如果一个 HTTP ACCEPT 头不合规，返回 <a href="http://httpstatus.es/406">406</a>。如果一个 Accept-Language 头不合规，响应什么状态码比较合适？ </p>
+<h1 class="question">如果一个 HTTP ACCEPT 头不合规，返回 <a href="http://httpstatus.es/406">406</a>。如果一个 Accept-Language 头不合规，响应什么状态码比较合适？ </h1>
 
 <h3>答案</h3>
 <p>你应该返回 <a href="http://httpstatus.es/406">406</a>. RFC 2616 10.4.7 提到 "accept headers" 是复数。它建议所有 Accept-* 头不合规时，应该返回一个 <a href="http://httpstatus.es/406">406</a> 响应。</p>

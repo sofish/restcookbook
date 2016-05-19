@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta content='description' name='The RESTful Cookbook 是由 Joshua Thijssen 及其小伙伴编写的一本关于 RESTful 的手册。这个仓库是由 sofish 提供的中文译本。'>
     <link href='{{ site.baseurl }}/assets/restcookbook.css' type='text/css' rel='stylesheet' media='screen, projection'>
-    <title>{% if page/.title %} {{ page.title }} | {% endif %} - RESTful 手册</title>
+    <title>{% if page/.title %} {{ page.title }} - {% endif %} RESTful 手册</title>
   </head>
   
   <body>
@@ -15,18 +15,21 @@
       </h1>
       <h4 class="typo-small">如何把东西变得 RESTful</h4>
     </header>
-    
+
     <div id='side'>{% for category in site.categories %}
-      <h4>{{ category | first }} ({{ category | last | size }})</h4>
-      <ul>
-        {% for post in category.last %}
-        <li>
-          <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-        </li>
-        {% endfor %}
-      </ul>{% endfor %}
+        <div class="category">
+          <h4 class="serif">{{ category | first }} ({{ category | last | size }})</h4>
+          <ul>
+            {% for post in category.last %}
+            <li>
+              <a class="textwrap" href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
     </div>
-    
+
     <div id="content" class="typo">{{ content }}</div>
       
     <small id="footer" class="serif">Copyright 2012

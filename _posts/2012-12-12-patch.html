@@ -1,15 +1,14 @@
 ---
 layout: recipe
-title: When to use the PATCH method
+title: 何时使用 PATCH 方法
 category: HTTP Methods
 author: joshua thijssen
 author_email: jthijssen@noxlogic.nl
 ---
 
-<p class="question">When should we use the PATCH HTTP method?</p>
+<p class="question">我们应该在什么情况下使用 PATCH 方法?</p>
 
-<p>The HTTP methods [PATCH] can be used to update partial resources. For instance, when you only need to update one
-    field of the resource, [PUT]ting a complete resource representation might be cumbersome and utilizes more bandwidth</p>
+<p>[PATCH] 方法可以用来更新资源的一个组成部分。举个例子，当你仅需更新资源的某一项，[PUT] 一个完整的资源就显得很累赘同时会消耗更多带宽。</p>
 
 <pre>
 PATCH /user/jthijssen HTTP/1.1
@@ -18,18 +17,15 @@ PATCH /user/jthijssen HTTP/1.1
 </user>
 </pre>
 
-
-<p>Also, the [PUT] method is idempotent. [PUT]ting the same data multiple times to the same resource, should not result
-    in different resources, while [POST]ing to the same resource can result creation of multiple resources.</p>
+<p>值得一提的是 [PUT] 方法是幂等的。对同一资源的多次 [PUT] 操作，不应该返回不同的资源，而对同一资源的多次 [POST] 可以生产多个资源。</p>
 
 <h3>另请参见</h3>
 <ul>
     <li><a href="http://tools.ietf.org/html/rfc5789">RFC 5789 - HTTP PATCH</a></li>
 </ul>
 
-<h3>Caveats</h3>
+<h3>注意：</h3>
 <ul>
-    <li>[PATCH] is neither safe nor idempotent.</li>
-    <li>An API implementing [PATCH] must patch atomically. It MUST not be possible that resources are half-patched when
-        requested by a [GET].</li>
+    <li>[PATCH] 即不完全也不幂等。</li>
+    <li>一个 API 实现 [PATCH] 必须是元子的。它一定不能出现只 [GET] 到被 [PATCH] 更新了一半的资源。</li>
 </ul>

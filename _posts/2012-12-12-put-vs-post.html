@@ -1,23 +1,19 @@
 ---
 layout: recipe
-title: When to use PUT or POST
+title: 我们应该何时选用 PUT 或者 POST
 category: HTTP Methods
 author: joshua thijssen
 author_email: jthijssen@noxlogic.nl
 ---
 
-<p class="question">When should we use PUT and when should we use POST?</p>
+<p class="question">我们应该何时选用 PUT 或者 POST?</p>
 
-<p>The HTTP methods [POST] and [PUT] aren't the HTTP equivalent of the CRUD's create and update. They both serve a
-    different purpose. It's quite possible, valid and even preferred in some occasions, to use [POST] to create resources,
-    or use [PUT] to update resources.</p>
-
-<p>Use [PUT] when you can update a resource completely through a specific resource. For instance, if you know that an
-    article resides at http://example.org/article/1234, you can [PUT] a new resource representation of this article
-    directly through a [PUT] on this URL.</p>
-
-<p>If you do not know the actual resource location, for instance, when you add a new article, but do not have any idea
-    where to store it, you can [POST] it to an URL, and let the server decide the actual URL.</p>
+<p>HTTP 的 [POST] 和 [PUT] 并不等价于 CRUD 中的创建（C）和更新（U）。他们服务于不同的目标，只不过在某种情况下可能也可以，
+  甚至推荐使 [POST] 来创建资源或者使用 [PUT] 来更新资源。</p>
+<p>当你可以通过一个特定资源来对其做完整更新，使用 [PUT]。举个例子，当你知道一个文章存在 http://example.org/article/1234，
+  你可以使用 [PUT] 来直接更新这篇文章的内容。</p>
+<p>当你不能确实一个资源的具体公交车，如当你需要创建一篇新文章，但不知道它会存在什么地方，你可以 [POST] 这篇文章到一个 URL，并让服务器决定
+它的真正 URL。</p>
 
 <pre>
 PUT /article/1234 HTTP/1.1
@@ -38,9 +34,8 @@ HTTP/1.1 201 Created
 Location: /articles/63636
 </pre>
 
-<p>As soon as you know the new resource location, you can use [PUT] again to do updates to the blue stapler article. But
-    as said before: you CAN add new resources through [PUT] as well. The next example is perfectly valid if your API
-    provides this functionality:</p>
+<p>当知道新资源的地址，你可能使用 [PUT] 来更新 《blue stapler》这篇文章。但像前面说过的：你也可以通过 [PUT] 来生新一个新资源。下面这个例子，
+  当 API 提供这个功能，它是完美且合规的：</p>
 
 <pre>
 PUT /articles/green-stapler HTTP/1.1
@@ -53,17 +48,16 @@ HTTP/1.1 201 Created
 Location: /articles/green-stapler
 </pre>
 
-<p>Here, the client decided on the actual resource URL.</p>
+<p>在这里，客户端决定了文章的 URL（注，它们之间不同的是，[PUT] 由前端决定 URL，而 [POST] 由后端决定 URL）。</p>
 
 
-
-<h3>Caveats</h3>
+<h3>注意：</h3>
 <ul>
-    <li>[PUT] and [POST] are both unsafe methods. However, [PUT] is idempotent, while [POST] is not.</li>
+    <li>[PUT] 和 [POST] 都是安全该当，但即使如此 [PUT] 是幂等的但 [POST] 不是。</li>
 </ul>
 
 
 <h3>另请参见</h3>
 <ul>
-    <li><a href="/HTTP%20Methods/idempotency">Idempotent and safe methods</a></li>
+    <li><a href="/HTTP%20Methods/idempotency">哪些是幂等或/且安全的方法？</a></li>
 </ul>
