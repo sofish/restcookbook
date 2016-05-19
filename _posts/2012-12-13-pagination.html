@@ -1,46 +1,42 @@
 ---
 layout: recipe
-title: Paginating collections
+title: 分页集合
 category: Resources
 author: joshua thijssen
 author_email: jthijssen@noxlogic.nl
 ---
 
-<p class="question">If I have a (large) collection of resources, how can I supply a client with a paginated list?</p>
-
-<p>Don't use custom pagination systems like adding a page number to the URL or query string. Instead, use link relations.</p>
+<p class="question">如果我有一个（大）资源集合，可以如何给客户端提供一个分布列表？</p>
+<p>不要使用像添加一个分页码到 URL 或者 query string 中这样的自定义的分页系统，相反，使用关系链接。</p>
 
 <pre>
 GET /collection HTTP/1.1
 
 HTTP/1.1 200 OK
-<collection>
-    <article id="1">...</article>
-    <article id="2">...</article>
-    <article id="3">...</article>
-    <article id="4">...</article>
-    <article id="5">...</article>
-    <meta>
-        <link rel="self" href="/collection" title="Current page"/>
-        <link rel="next" href="/collection/2" title="Next page"/>
-        <link rel="first" href="/collection/1" title="First page"/>
-        <link rel="last" href="/collection/5" title="Last page"/>
-    </meta>
-</collection>
+&lt;collection&gt;
+    &lt;article id="1"&gt;...&lt;/article&gt;
+    &lt;article id="2"&gt;...&lt;/article&gt;
+    &lt;article id="3"&gt;...&lt;/article&gt;
+    &lt;article id="4"&gt;...&lt;/article&gt;
+    &lt;article id="5"&gt;...&lt;/article&gt;
+    &lt;meta&gt;
+        &lt;link rel="self" href="/collection" title="Current page"/&gt;
+        &lt;link rel="next" href="/collection/2" title="Next page"/&gt;
+        &lt;link rel="first" href="/collection/1" title="First page"/&gt;
+        &lt;link rel="last" href="/collection/5" title="Last page"/&gt;
+    &lt;/meta&gt;
+&lt;/collection&gt;
 </pre>
 
-<p>If the client want to browse through the next set of collections, it can do so by following the "next" relation link. These are
-    defined by IANA as standard relations</p>
-
+<p>当客户端希望浏览下一个分页集合，它可以通过「next」关系链接来获得。这是 IANA 定义的标准关联类型。</p>
 
 <h3>另请参见</h3>
 <ul>
-    <li><a href="/Resources/link-types">Using link-types in relations</a></li>
+    <li><a href="/Resources/link-types">在表示关系的地方使用 link-types（关联类型）</a></li>
 </ul>
 
 <h3>注意</h3>
 <ul>
-    <li>Even though it's tempting to create your own pagination scheme by "building" URLs, you should only use the information given by
-    the API. This means, you cannot assume that the 3rd page can be found at /collection/3. If you do, your client will break as soon
-    as the API changes its pagination behaviour.</li>
+    <li>尽管它尝试通过创建 URL 来建立自己的分布 scheme，但必须只使用 API 给出的消息。这意味着，你不能假设第 3 页就存在于 /collection/3，
+如果这样，客户端将会因为 API 更换分页方式而出问题。</li>
 </ul>
