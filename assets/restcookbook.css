@@ -353,10 +353,10 @@ body{padding:30px 50px;}
 #header > h4, #header > h1{display:inline-block;margin-right:20px;}
 
 #side, #content{float:left;}
-#side{width:100%;font-size:14px;}
+#side{width:100%;font-size:14px; background: #f8f8f8; padding: 20px 20px 0; margin-bottom: 30px;}
 #side li {list-style:circle;margin-left:1.3em;color:#999; }
 #side .category {width: 30%;margin-bottom:1.2em;float:left;margin-right:3%;}
-.category > h4 {font-size:22px;cursor:pointer; }
+.category > h4 {font-size:16px;cursor:pointer; }
 .category> h4:before{color:#08c;}
 .category > ul{ transform:translateY(50px);height:0;visibility:hidden;opacity:0;position:absolute;background:#fff;border:1px solid #eee;border-bottom-color:#ddd;padding:10px;
   -webkit-transition:all 0.1s ease-in;
