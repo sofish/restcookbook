@@ -17,18 +17,18 @@ author_email: jthijssen@noxlogic.nl
 
 <pre>
 PUT /article/1234 HTTP/1.1
-<article>
-    <title>red stapler</title>
-    <price currency="eur">12.50</price>
-</article>
+&lt;article&gt;
+    &lt;title&gt;red stapler&lt;/title&gt;
+    &lt;price currency="eur"&gt;12.50&lt;/price&gt;
+&lt;/article&gt;
 </pre>
 
 <pre>
 POST /articles HTTP/1.1
-<article>
-    <title>blue stapler</title>
-    <price currency="eur">7.50</price>
-</article>
+&lt;article&gt;
+    &lt;title&gt;blue stapler&lt;/title&gt;
+    &lt;price currency="eur"&gt;7.50&lt;/price&gt;
+&lt;/article&gt;
 
 HTTP/1.1 201 Created
 Location: /articles/63636
@@ -39,10 +39,10 @@ Location: /articles/63636
 
 <pre>
 PUT /articles/green-stapler HTTP/1.1
-<article>
-    <title>green stapler</title>
-    <price currency="eur">9.95</price>
-</article>
+&lt;article&gt;
+    &lt;title&gt;green stapler&lt;/title&gt;
+    &lt;price currency="eur"&gt;9.95&lt;/price&gt;
+&lt;/article&gt;
 
 HTTP/1.1 201 Created
 Location: /articles/green-stapler

@@ -12,9 +12,9 @@ author_email: jthijssen@noxlogic.nl
 
 <pre>
 PATCH /user/jthijssen HTTP/1.1
-<user>
-    <firstname>Joshua</firstname>
-</user>
+&lt;user&gt;
+    &lt;firstname&gt;Joshua&lt;/firstname&gt;
+&lt;/user&gt;
 </pre>
 
 <p>值得一提的是 [PUT] 方法是幂等的。对同一资源的多次 [PUT] 操作，不应该返回不同的资源，而对同一资源的多次 [POST] 可以生产多个资源。</p>
